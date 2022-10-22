@@ -1,0 +1,118 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Reference",
+"class": "C_DeleteFlag",
+"language": "GDScript",
+"path": "res://gdECS-test-folder/Components/DeleteFlag.gd"
+}, {
+"base": "Reference",
+"class": "C_Gravity",
+"language": "GDScript",
+"path": "res://gdECS-test-folder/Components/C_Gravity.gd"
+}, {
+"base": "Reference",
+"class": "C_NodeFreeingOnDelete",
+"language": "GDScript",
+"path": "res://gdECS-test-folder/Components/NodeFreeingOnDelete.gd"
+}, {
+"base": "Reference",
+"class": "C_NodeReplacing",
+"language": "GDScript",
+"path": "res://gdECS-test-folder/Components/NodeReplacing.gd"
+}, {
+"base": "Reference",
+"class": "C_Position",
+"language": "GDScript",
+"path": "res://gdECS-test-folder/Components/Position.gd"
+}, {
+"base": "Reference",
+"class": "C_Stopped",
+"language": "GDScript",
+"path": "res://gdECS-test-folder/Components/C_Stopped.gd"
+}, {
+"base": "Reference",
+"class": "C_Velocity",
+"language": "GDScript",
+"path": "res://gdECS-test-folder/Components/Velocity.gd"
+}, {
+"base": "Object",
+"class": "Entity",
+"language": "GDScript",
+"path": "res://addons/ecs/src/Entity.gd"
+}, {
+"base": "Reference",
+"class": "EntityFilter",
+"language": "GDScript",
+"path": "res://addons/ecs/src/EntityFilter.gd"
+}, {
+"base": "Reference",
+"class": "EntitySignature",
+"language": "GDScript",
+"path": "res://addons/ecs/src/EntitySignature.gd"
+}, {
+"base": "Node",
+"class": "System",
+"language": "GDScript",
+"path": "res://addons/ecs/src/System.gd"
+} ]
+_global_script_class_icons={
+"C_DeleteFlag": "",
+"C_Gravity": "",
+"C_NodeFreeingOnDelete": "",
+"C_NodeReplacing": "",
+"C_Position": "",
+"C_Stopped": "",
+"C_Velocity": "",
+"Entity": "",
+"EntityFilter": "",
+"EntitySignature": "",
+"System": ""
+}
+
+[application]
+
+config/name="GdECS"
+run/main_scene="res://gdECS-test-folder/Moving.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+ECS="*res://addons/ecs/src/ECS.gd"
+
+[display]
+
+window/size/always_on_top=true
+window/vsync/use_vsync=false
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/ecs/plugin.cfg" )
+
+[gui]
+
+common/drop_mouse_on_gui_input_disabled=true
+
+[input]
+
+mouse_left={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+
+[physics]
+
+common/enable_pause_aware_picking=true
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"

@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends System
+
+
+onready var borders = get_tree().root.size
+
+
+func on_entity_process(en:Entity, delta:float):
+	var pos = en.get_component(C_Position.COMPONENT_TYPE)
+	var vel = en.get_component(C_Velocity.COMPONENT_TYPE)
+	
+	if pos.position.x > borders.x or pos.position.x < 0:
+		vel.direction.x *= -1
+	
+	if pos.position.y > borders.y or pos.position.y < 0:
+		vel.direction.y *= -1
+
+
+func get_necessary_components() -> Array:
+	return [
+		C_Position.COMPONENT_TYPE,
+		C_Velocity.COMPONENT_TYPE
+	]
+"
+
+[node name="BouncingSystem" type="Node"]
+script = SubResource( 1 )

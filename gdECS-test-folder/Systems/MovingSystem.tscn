@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends System
+
+
+func on_entity_process(en:Entity, delta:float):
+	var position = en.get_component(C_Position.COMPONENT_TYPE)
+	var velocity = en.get_component(C_Velocity.COMPONENT_TYPE)
+	
+	position.position += velocity.direction*velocity.speed * delta
+
+
+func get_necessary_components() -> Array:
+	return [
+		C_Position.COMPONENT_TYPE,
+		C_Velocity.COMPONENT_TYPE
+	]
+
+
+func get_banned_components() -> Array:
+	return [
+		C_Stopped.COMPONENT_TYPE
+	]
+"
+
+[node name="MovingSystem" type="Node"]
+script = SubResource( 1 )

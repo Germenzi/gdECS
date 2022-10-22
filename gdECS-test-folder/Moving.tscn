@@ -1,0 +1,126 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://gdECS-test-folder/Systems/MovingSystem.tscn" type="PackedScene" id=2]
+[ext_resource path="res://gdECS-test-folder/Systems/NodeReplacingSystem.tscn" type="PackedScene" id=3]
+[ext_resource path="res://gdECS-test-folder/Systems/BouncingSystem.tscn" type="PackedScene" id=4]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+
+func _ready():
+	for i in range(500):
+		var visual = $Sprite.duplicate()
+		get_parent().call_deferred(\"add_child\", visual)
+		
+		var node_rep = C_NodeReplacing.new(visual)
+		var pos = C_Position.new(Vector2(100, 100))
+		var vel = C_Velocity.new(200.0, Vector2(randf(), randf()).normalized())
+		var stop = C_Stopped.new()
+		
+		var just = Entity.new([
+			node_rep, 
+			pos,
+			vel,
+		])
+		
+		just.bind_node(visual)
+		
+		if i%2 == 0:
+			just.add_component(stop, true)
+		elif i%4 != 0:
+			ECS.register_entity(just)
+
+
+func _process(delta):
+	if Input.is_action_just_pressed(\"ui_select\"):
+		for i in ECS.entities:
+			if i.has_component(C_Stopped.COMPONENT_TYPE):
+				i.remove_component(C_Stopped.COMPONENT_TYPE)
+			else:
+				i.add_component(C_Stopped.new())
+	
+	if Input.is_action_just_pressed(\"ui_right\"):
+		ECS.clear_entities()
+		get_tree().change_scene(\"res://gdECS-test-folder/Bouncing.tscn\")
+"
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends System
+
+const DELETEING_DISTANCE = 30.0
+
+func get_necessary_components() -> Array:
+	return [
+		C_Position.COMPONENT_TYPE
+	]
+
+
+func on_entity_process(ent:Entity, delta:float):
+	var pos = ent.get_component(C_Position.COMPONENT_TYPE)
+	
+	var mouse = get_parent().get_global_mouse_position()
+	
+	if (pos.position-mouse).length() < DELETEING_DISTANCE and Input.is_action_pressed(\"mouse_left\"):
+		ent.add_component(C_DeleteFlag.new())
+"
+
+[sub_resource type="GDScript" id=4]
+script/source = "extends System
+
+func get_necessary_components() -> Array:
+	return [
+		C_DeleteFlag.COMPONENT_TYPE
+	]
+
+
+func on_entity_process(ent:Entity, delta:float):
+	ent.free()
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends System
+
+const REPLACE_DISTANCE = 20.0
+
+
+onready var borders = get_tree().root.size
+
+
+func get_necessary_components() -> Array:
+	return [
+		C_Position.COMPONENT_TYPE
+	]
+
+
+func on_entity_process(ent:Entity, delta:float):
+	var pos = ent.get_component(C_Position.COMPONENT_TYPE)
+	
+	var mouse = get_parent().get_global_mouse_position()
+	
+	if (pos.position-mouse).length() < REPLACE_DISTANCE:
+		pos.position = Vector2(randf(), randf())*borders
+"
+
+[node name="Moving" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="MovingSystem" parent="." instance=ExtResource( 2 )]
+
+[node name="NodeReplacingSystem" parent="." instance=ExtResource( 3 )]
+
+[node name="BouncingSystem" parent="." instance=ExtResource( 4 )]
+
+[node name="DeleteOnTouchSystem" type="Node" parent="."]
+script = SubResource( 3 )
+
+[node name="DeletingSystem" type="Node" parent="."]
+script = SubResource( 4 )
+
+[node name="Replacing" type="Node" parent="."]
+script = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 89, 60 )
+texture = ExtResource( 1 )

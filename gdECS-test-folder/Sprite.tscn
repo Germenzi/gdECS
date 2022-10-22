@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Sprite
+
+
+var dir:Vector2
+var speed:float = 200.0
+
+onready var borders = get_tree().root.size
+
+
+func _ready():
+	dir = Vector2(randf(), randf()).normalized()
+
+
+func _process(delta):
+	position += dir*speed*delta
+	
+	if position.x < 0 or position.x > borders.x:
+		dir.x *= -1
+	
+	if position.y < 0 or position.y > borders.y:
+		dir.y *= -1
+"
+
+[node name="Sprite" type="Sprite"]
+texture = ExtResource( 1 )
+script = SubResource( 1 )
