@@ -12,37 +12,37 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "C_DeleteFlag",
 "language": "GDScript",
-"path": "res://gdECS-test-folder/Components/DeleteFlag.gd"
+"path": "res://addons/ecs/example/Components/DeleteFlag.gd"
 }, {
 "base": "Reference",
 "class": "C_Gravity",
 "language": "GDScript",
-"path": "res://gdECS-test-folder/Components/C_Gravity.gd"
+"path": "res://addons/ecs/example/Components/C_Gravity.gd"
 }, {
 "base": "Reference",
 "class": "C_NodeFreeingOnDelete",
 "language": "GDScript",
-"path": "res://gdECS-test-folder/Components/NodeFreeingOnDelete.gd"
+"path": "res://addons/ecs/example/Components/NodeFreeingOnDelete.gd"
 }, {
 "base": "Reference",
 "class": "C_NodeReplacing",
 "language": "GDScript",
-"path": "res://gdECS-test-folder/Components/NodeReplacing.gd"
+"path": "res://addons/ecs/example/Components/NodeReplacing.gd"
 }, {
 "base": "Reference",
 "class": "C_Position",
 "language": "GDScript",
-"path": "res://gdECS-test-folder/Components/Position.gd"
+"path": "res://addons/ecs/example/Components/Position.gd"
 }, {
 "base": "Reference",
 "class": "C_Stopped",
 "language": "GDScript",
-"path": "res://gdECS-test-folder/Components/C_Stopped.gd"
+"path": "res://addons/ecs/example/Components/C_Stopped.gd"
 }, {
 "base": "Reference",
 "class": "C_Velocity",
 "language": "GDScript",
-"path": "res://gdECS-test-folder/Components/Velocity.gd"
+"path": "res://addons/ecs/example/Components/Velocity.gd"
 }, {
 "base": "Object",
 "class": "Entity",
@@ -81,8 +81,8 @@ _global_script_class_icons={
 [application]
 
 config/name="GdECS"
-run/main_scene="res://gdECS-test-folder/Moving.tscn"
-config/icon="res://icon.png"
+run/main_scene="res://addons/ecs/example/Moving.tscn"
+config/icon="res://addons/ecs/example/icon.png"
 
 [autoload]
 
@@ -112,7 +112,3 @@ mouse_left={
 [physics]
 
 common/enable_pause_aware_picking=true
-
-[rendering]
-
-environment/default_environment="res://default_env.tres"

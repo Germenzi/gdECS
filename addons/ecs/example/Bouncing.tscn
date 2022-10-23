@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://icon.png" type="Texture" id=1]
-[ext_resource path="res://gdECS-test-folder/Systems/MovingSystem.tscn" type="PackedScene" id=2]
-[ext_resource path="res://gdECS-test-folder/Systems/NodeReplacingSystem.tscn" type="PackedScene" id=3]
-[ext_resource path="res://gdECS-test-folder/Systems/BouncingSystem.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/ecs/example/icon.png" type="Texture" id=1]
+[ext_resource path="res://addons/ecs/example/Systems/MovingSystem.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/ecs/example/Systems/NodeReplacingSystem.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/ecs/example/Systems/BouncingSystem.tscn" type="PackedScene" id=4]
 
 [sub_resource type="GDScript" id=2]
 script/source = "extends Node2D
@@ -32,7 +32,7 @@ func _ready():
 func _process(delta):
 	if Input.is_action_just_pressed(\"ui_accept\"):
 		ECS.clear_entities()
-		get_tree().change_scene(\"res://gdECS-test-folder/Moving.tscn\")
+		get_tree().change_scene(\"res://addons/ecs/example/Moving.tscn\")
 "
 
 [sub_resource type="GDScript" id=1]
