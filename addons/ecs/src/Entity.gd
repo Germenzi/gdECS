@@ -22,7 +22,13 @@ func _init(components:Array=[], autoregister:bool=true):
 func add_component(comp_instance:Object, readonly:bool=false, overwrite:bool=false):
 	assert(ECS.is_instance_component(comp_instance))
 	
-	if overwrite or not has_component(comp_instance.COMPONENT_TYPE):
+	var existing : Object = get_component(comp_instance.COMPONENT_TYPE)
+	
+	if overwrite or existing == null:
+		if existing != null and ECS.is_component_readonly(existing):
+			print("Cannot overwrite readonly component <{0}> in entity {1}".format([comp_instance.COMPONENT_TYPE, self]))
+			return
+		
 		components[comp_instance.COMPONENT_TYPE] = comp_instance
 		
 		if readonly:
