@@ -51,7 +51,7 @@ ECS.unregister_filter(filter:EntityFilter)
 ```
 
 Register entity for passing it into filters it matches:
-```
+```gdscript
 ECS.register_entity(entity:Entity)
 ```
 
