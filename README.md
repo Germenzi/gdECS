@@ -186,7 +186,7 @@ signal entity_removed(entity) # emmited when entity leaves valid_entities becaus
 
 ## :large_orange_diamond: Systems
 
-Addon provides you simple system implementation with `System` class. Just overwrite this three methods:
+Addon provides you simple system implementation with `System` class. Just override this three methods:
 ```gdscript
 # here system logic
 on_entity_process(entity:Entity, # entity to process
