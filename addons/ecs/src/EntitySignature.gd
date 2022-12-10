@@ -27,6 +27,9 @@ func add_several_banned(several:Array):
 
 
 func match_entity(ent:Entity):
+	if Entity.is_dirty(ent):
+		return false
+	
 	for comp in necessary_components:
 		if not ent.has_component(comp):
 			return false
