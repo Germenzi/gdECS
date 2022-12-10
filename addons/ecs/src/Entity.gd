@@ -11,6 +11,11 @@ var _binded_nodes : Array = []
 var inside_ecs:bool = false # only for use from ECS singleton!
 
 
+static func is_dirty(entity):
+	return entity == null or \
+			not is_instance_valid(entity)
+
+
 func _init(components:Array=[], autoregister:bool=true):
 	if autoregister:
 		ECS.register_entity(self)
