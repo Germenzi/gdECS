@@ -11,7 +11,7 @@ func register_filter(filter:EntityFilter):
 	filters.append(filter)
 	
 	for ent in entities:
-		if filter.entity_signature.match_entity(ent):
+		if EntitySignature.match_entity(filter.entity_signature, ent):
 			filter.add_entity(ent)
 
 
@@ -55,7 +55,7 @@ func revise_entity(entity:Entity):
 		return
 	
 	for filter in filters:
-		if filter.entity_signature.match_entity(entity):
+		if EntitySignature.match_entity(filter.entity_signature, entity):
 			if not entity in filter.valid_entities:
 				filter.add_entity(entity)
 		else:

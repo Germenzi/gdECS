@@ -20,11 +20,6 @@ _global_script_classes=[ {
 "path": "res://addons/ecs/example/Components/C_Gravity.gd"
 }, {
 "base": "Reference",
-"class": "C_NodeFreeingOnDelete",
-"language": "GDScript",
-"path": "res://addons/ecs/example/Components/NodeFreeingOnDelete.gd"
-}, {
-"base": "Reference",
 "class": "C_NodeReplacing",
 "language": "GDScript",
 "path": "res://addons/ecs/example/Components/NodeReplacing.gd"
@@ -67,7 +62,6 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "C_DeleteFlag": "",
 "C_Gravity": "",
-"C_NodeFreeingOnDelete": "",
 "C_NodeReplacing": "",
 "C_Position": "",
 "C_Stopped": "",

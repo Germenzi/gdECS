@@ -11,8 +11,10 @@ var entity_filter : EntityFilter
 
 func _enter_tree():
 	entity_filter = EntityFilter.new(
-		get_necessary_components(),
-		get_banned_components()
+		EntitySignature.create_signature(
+			get_necessary_components(),
+			get_banned_components()
+		)
 	)
 	
 	ECS.register_filter(entity_filter)
@@ -28,6 +30,7 @@ func _process(delta:float):
 	
 	for i in entity_filter.valid_entities:
 		on_entity_process(i, delta)
+
 
 # virtual
 func on_entity_process(entity:Entity, delta:float):

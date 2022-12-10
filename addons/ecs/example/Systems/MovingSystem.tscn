@@ -9,7 +9,7 @@ func on_entity_process(en:Entity, delta:float):
 	var velocity = en.get_component(C_Velocity.COMPONENT_TYPE)
 	
 	position.position += velocity.direction*velocity.speed * delta
-
+	
 
 func get_necessary_components() -> Array:
 	return [

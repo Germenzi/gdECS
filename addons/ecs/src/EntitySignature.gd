@@ -2,40 +2,26 @@ extends Reference
 
 class_name EntitySignature
 
-var necessary_components : Array = []
-var banned_components : Array = []
+const NECESSARY_STRING = "NECESSARY_COMPONENTS"
+const BANNED_STRING = "BANNED_COMPONENTS"
 
 
-func add_necessary_component(comp_name:String):
-	if not comp_name in necessary_components:
-		necessary_components.append(comp_name)
-
-
-func add_several_necessary(several:Array):
-	for i in several:
-		add_necessary_component(i)
-
-
-func add_banned_component(comp_name:String):
-	if not comp_name in banned_components:
-		banned_components.append(comp_name)
-
-
-func add_several_banned(several:Array):
-	for i in several:
-		add_banned_component(i)
-
-
-func match_entity(ent:Entity):
-	if Entity.is_dirty(ent):
+static func match_entity(signature:Dictionary, entity:Entity):
+	if Entity.is_dirty(entity):
 		return false
 	
-	for comp in necessary_components:
-		if not ent.has_component(comp):
+	for ncc in signature.get(NECESSARY_STRING, []):
+		if not entity.has_component(ncc):
 			return false
 	
-	for comp in banned_components:
-		if ent.has_component(comp):
+	for bnc in signature.get(BANNED_STRING, []):
+		if entity.has_component(bnc):
 			return false
 	
 	return true
+
+static func create_signature(necessary:Array, banned:Array=[]) -> Dictionary:
+	return {
+		NECESSARY_STRING : necessary.duplicate(),
+		BANNED_STRING : banned.duplicate()
+	}
