@@ -12,32 +12,32 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "C_DeleteFlag",
 "language": "GDScript",
-"path": "res://addons/ecs/example/Components/DeleteFlag.gd"
+"path": "res://ECS_addon_example/Components/DeleteFlag.gd"
 }, {
 "base": "Reference",
 "class": "C_Gravity",
 "language": "GDScript",
-"path": "res://addons/ecs/example/Components/C_Gravity.gd"
+"path": "res://ECS_addon_example/Components/C_Gravity.gd"
 }, {
 "base": "Reference",
 "class": "C_NodeReplacing",
 "language": "GDScript",
-"path": "res://addons/ecs/example/Components/NodeReplacing.gd"
+"path": "res://ECS_addon_example/Components/NodeReplacing.gd"
 }, {
 "base": "Reference",
 "class": "C_Position",
 "language": "GDScript",
-"path": "res://addons/ecs/example/Components/Position.gd"
+"path": "res://ECS_addon_example/Components/Position.gd"
 }, {
 "base": "Reference",
 "class": "C_Stopped",
 "language": "GDScript",
-"path": "res://addons/ecs/example/Components/C_Stopped.gd"
+"path": "res://ECS_addon_example/Components/C_Stopped.gd"
 }, {
 "base": "Reference",
 "class": "C_Velocity",
 "language": "GDScript",
-"path": "res://addons/ecs/example/Components/Velocity.gd"
+"path": "res://ECS_addon_example/Components/Velocity.gd"
 }, {
 "base": "Object",
 "class": "Entity",
@@ -75,8 +75,8 @@ _global_script_class_icons={
 [application]
 
 config/name="GdECS"
-run/main_scene="res://addons/ecs/example/Moving.tscn"
-config/icon="res://addons/ecs/example/icon.png"
+run/main_scene="res://ECS_addon_example/Moving.tscn"
+config/icon="res://ECS_addon_example/icon.png"
 
 [autoload]
 
