@@ -8,15 +8,28 @@ var filters : Array = []
 
 
 func register_filter(filter:EntityFilter):
+	if filter.registered:
+		return
+	
 	filters.append(filter)
 	
 	for ent in entities:
 		if EntitySignature.match_entity(filter.entity_signature, ent):
 			filter.add_entity(ent)
+	
+	filter.registered = true
+	filter.emit_signal("was_registered")
 
 
 func unregister_filter(filter:EntityFilter):
+	if not filter.registered:
+		return
+	
+	filter.emit_signal("pre_unregister")
+	
 	filters.erase(filter)
+	filter.valid_entities = []
+	filter.registered = false
 
 
 func register_entity(entity:Entity):
