@@ -3,7 +3,7 @@
 Simple ECS addon for godot v3.5.1
 
 This addon doesn't focus on performance, due to it was written on GDScript, so there is no point to count msecs and care about memory etc.
-Main target is simple api and usability, so this is good choice for prototyping and acquaintance with ECS basic concepts.
+Main target is simple api and usability, so feel free to change the code the way you want.
 
 :exclamation: code snippets like `some_class.function(param:int=0)` doesn't fit GDScript syntax and represents only for methods signature demonstration
 
@@ -16,8 +16,8 @@ Main target is simple api and usability, so this is good choice for prototyping 
 - nodes binding with entity
 
 ## :large_orange_diamond: Addon classes
-- `Entity` - a class of component container
-- `EntitySignature` - a class of component set for matching entities
+- `Entity` - a class of components container
+- `EntitySignature` - a static class allowing you matching entities with specified components set
 - `EntityFilter` - class which gets filtered entities from ECS
 - `ECS` - autoload which binds all together
 - `System` - system implementation as `Node`
@@ -25,7 +25,7 @@ Main target is simple api and usability, so this is good choice for prototyping 
 
 ## :large_orange_diamond: Components
 
-To create component just assing `COMPONENT_TYPE` property to any instance. ECS detects components exacly by its existence. There is no point is it `Object` or `AnimationPlayer`, so you can easily control animations and nodes parameters through systems. Example:
+To create component just assign `COMPONENT_TYPE` property to any instance. ECS detects components exacly by its existence. There is no point is it `Object` or `AnimationPlayer`, so you can control any scene with ease how you do it without using ECS. Example:
 ``` gdscript
 extends Node2D
 
@@ -133,34 +133,36 @@ entity.free() # it will automatically do needed things
 
 ## :large_orange_diamond: Entity signature
 
-`EntitySignature` is a class for checking entity for having and not specified components. Juts create an instance and use it:
-```gdscript
-var entity_signature = EntitySignature.new() # no constructor parameters
-```
-
-You can control component set with the methods below:
+`EntitySignature` is a statuc class for checking entity for having and not specified components. Just create dictionary as in example below:
 
 ```gdscript
-entity_signature.add_necessary_component(comp_type:String)
-
-entity_signature.add_several_necessary(several:Array) # just adds several necessary
-
-entity_signature.add_banned_component(comp_type:String)
-
-entity_signature.add_several_banned(several:Array) # just adds several banned
+var signature = {
+	EntitySignature.NECESSARY_STRING : ["C_MyComponent"],
+	EntitySignature.BANNED_STRING : ["C_NotThat"]
+}
 ```
 
-And check does entity match specified component set:
+or using `EntitySignature.create_signature(necessary:Array, banned:Array=[])`:
+
 ```gdscript
-entity_signature.match_entity(entity:Entity)
+var signature = EntitySignature.create_signature(["C_MyComponent"],  ["C_NotThat"])
 ```
+
+Where `EntitySignature.NECESSARY_STRING` and `EntitySignature.BANNED_STRING` by default is `"NECESSARY_COMPONENTS"` and `"BANNED_COMPONENTS"` accordingly.
+
+Then check does entity match specified component set:
+
+```gdscript
+EntitySignature.match_entity(signature:Dictionary, entity:Entity)
+```
+
+If the signature has no necessary and banned, it will return `true`.
 
 ## :large_orange_diamond: Entity filter
 
 Class, instance of which can be registered in ECS autoload (see 'ECS autoload' section) and get valid entities from it. Just specify necessary and, optionally, banned components typenames:
 ```gdscript
-var entity_filter : EntityFilter = EntityFilter.new(necessary_components:Array, # components, entities without which will not be valid
-                                                    banned_components:Array=[]) # components, entities with which will not be valid
+var entity_filter : EntityFilter = EntityFilter.new(signature:Dictionary) # specify valid components set
 ```
 
 And you should register it for able it getting entities:
@@ -168,20 +170,28 @@ And you should register it for able it getting entities:
 ECS.register_filter(filter:EntityFilter)
 ```
 
-After it valid entities will automatically be added to `valid_entites` array.
+After it valid entities will automatically be added to `valid_entites` array:
 ```gdscript
 entity_filter.valid_entites # keeps all valid entities
 ```
 
-Also you can stop monitoring entities, but be aware of that deleted entities will not be removed from `valid_entites`:
+Also you can register filter, after it its valid_entities will be cleaned and wouldn't be touched by ECS until re-registration:
 ```gdscript
 ECS.unregister_filter(filter:EntityFilter)
 ```
 
-Also it has signals:
+It has signals:
 ``` gdscript
 signal entity_added(entity) # emmited when valid entity added to valid_entitites array
 signal entity_removed(entity) # emmited when entity leaves valid_entities because of any reason
+
+signal was_registered # emitted after filter got valid entities
+signal pre_unregister # emitted before valid entities cleaned
+```
+
+And you can monitor `EntityFilter` registration status by:
+```gdscript
+entity_filter.registered
 ```
 
 ## :large_orange_diamond: Systems
@@ -201,4 +211,4 @@ get_banned_components()
 
 Activate and deactivate it with related export variable.
 
-But you can create any system implementation you want using EntityFilter.
+But you can create any system implementation you want using `EntityFilter`.
