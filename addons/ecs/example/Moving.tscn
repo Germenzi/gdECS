@@ -13,14 +13,13 @@ func _ready():
 	for i in range(500):
 		var visual = $Sprite.duplicate()
 		get_parent().call_deferred(\"add_child\", visual)
-		
-		var node_rep = C_NodeReplacing.new(visual)
+	
 		var pos = C_Position.new(Vector2(100, 100))
 		var vel = C_Velocity.new(200.0, Vector2(randf(), randf()).normalized())
 		var stop = C_Stopped.new()
 		
 		var just = Entity.new([
-			node_rep, 
+			visual, 
 			pos,
 			vel,
 		])
@@ -63,20 +62,7 @@ func on_entity_process(ent:Entity, delta:float):
 	var mouse = get_parent().get_global_mouse_position()
 	
 	if (pos.position-mouse).length() < DELETEING_DISTANCE and Input.is_action_pressed(\"mouse_left\"):
-		ent.add_component(C_DeleteFlag.new())
-"
-
-[sub_resource type="GDScript" id=4]
-script/source = "extends System
-
-func get_necessary_components() -> Array:
-	return [
-		C_DeleteFlag.COMPONENT_TYPE
-	]
-
-
-func on_entity_process(ent:Entity, delta:float):
-	ent.free()
+		ent.free()
 "
 
 [sub_resource type="GDScript" id=2]
@@ -103,6 +89,12 @@ func on_entity_process(ent:Entity, delta:float):
 		pos.position = Vector2(randf(), randf())*borders
 "
 
+[sub_resource type="GDScript" id=5]
+script/source = "extends Sprite
+
+const COMPONENT_TYPE = C_NodeReplacing.COMPONENT_TYPE
+"
+
 [node name="Moving" type="Node2D"]
 script = SubResource( 1 )
 
@@ -115,12 +107,10 @@ script = SubResource( 1 )
 [node name="DeleteOnTouchSystem" type="Node" parent="."]
 script = SubResource( 3 )
 
-[node name="DeletingSystem" type="Node" parent="."]
-script = SubResource( 4 )
-
 [node name="Replacing" type="Node" parent="."]
 script = SubResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 89, 60 )
 texture = ExtResource( 1 )
+script = SubResource( 5 )

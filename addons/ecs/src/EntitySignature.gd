@@ -20,6 +20,7 @@ static func match_entity(signature:Dictionary, entity:Entity):
 	
 	return true
 
+
 static func create_signature(necessary:Array, banned:Array=[]) -> Dictionary:
 	return {
 		NECESSARY_STRING : necessary.duplicate(),

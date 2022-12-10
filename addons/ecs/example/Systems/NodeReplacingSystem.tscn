@@ -6,7 +6,7 @@ script/source = "extends System
 
 func on_entity_process(en:Entity, delta:float):
 	var pos = en.get_component(C_Position.COMPONENT_TYPE)
-	var node = en.get_component(C_NodeReplacing.COMPONENT_TYPE).node
+	var node = en.get_component(C_NodeReplacing.COMPONENT_TYPE)
 	
 	if node == null or not is_instance_valid(node):
 		return
